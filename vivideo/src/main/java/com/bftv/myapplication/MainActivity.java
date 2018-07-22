@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     String[] urls = {
-            "http://v6-tt.ixigua.com/video/m/220c21e855b13d14b75a57ee36bf717af17115934d7000060105da34ea9/?Expires=1532052011&AWSAccessKeyId=qh0h9TdcEMoS2oPj7aKX&Signature=Y6uKEbJME4qFRG299bqUK6BjayA%3D",
+            "http://v1-tt.ixigua.com/f2ab1b1a26ad4f376f6b52cce304310b/5b51e7a6/video/m/2203b93c61229544433a04367f082223d5111596444000065b13e96be82/",
             "http://v6-tt.ixigua.com/video/m/2203b93c61229544433a04367f082223d5111596444000065b13e96be82/?Expires=1532052233&AWSAccessKeyId=qh0h9TdcEMoS2oPj7aKX&Signature=rofER1hTUlFONgWJZwUcSoGII7o%3D",
             "http://v1-tt.ixigua.com/5ead96e3a8f5e2729b6b7eba098aaa08/5b51439f/video/m/2203b93c61229544433a04367f082223d5111596444000065b13e96be82/",
             "http://v11-tt.ixigua.com/6ae69854be4814d200d8173d6ca0c85e/5b5143c8/video/m/2203b93c61229544433a04367f082223d5111596444000065b13e96be82/",

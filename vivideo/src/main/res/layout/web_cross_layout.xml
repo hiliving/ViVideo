@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <WebView
+        android:layout_width="1px"
+        android:id="@+id/testweb"
+        android:layout_height="1px"/>
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:background="#fff"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginRight="30dp"
+            android:text="请在播放器出现时再点我"
+            android:id="@+id/getUrl"
+            android:background="@android:color/transparent"
+            />
+        <com.bftv.myapplication.view.PopSpinnerView
+            android:layout_width="140dp"
+            android:id="@+id/psv_list"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            app:textName="选择播放线路"
+            android:layout_height="40dp"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

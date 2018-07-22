@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,7 +14,17 @@ import java.util.List;
  */
 
 public class MyAdapter extends BaseAdapter {
-
+    private int[] src = {
+            R.drawable.aqylogo,
+            R.drawable.youkulogo,
+            R.drawable.qqlogo,
+            R.drawable.sohulogo,
+            R.drawable.a56logo,
+            R.drawable.a163logo,
+            R.drawable.letvlogo,
+            R.drawable.tudoulogo,
+            R.drawable.hunantvlogo
+    };
     private List<DateInfo> infos;
 
     public MyAdapter(List<DateInfo> infos) {
@@ -22,7 +33,7 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return infos.size();
+        return src.length;
     }
 
     @Override
@@ -38,17 +49,9 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, final ViewGroup viewGroup) {
 
-        View views = View.inflate(viewGroup.getContext(),R.layout.item,null);
-        TextView tv = views.findViewById(R.id.tv);
-        tv.setText(infos.get(i).getNum());
-        final Intent intent = new Intent(viewGroup.getContext(),PlayActivity.class);
-        intent.putExtra("URL",infos.get(i).getUrl());
-        views.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewGroup.getContext().startActivity(intent);
-            }
-        });
+        View views = View.inflate(viewGroup.getContext(),R.layout.program_item,null);
+        ImageView img = views.findViewById(R.id.icons);
+        img.setImageResource(src[i]);
         return views;
     }
 }
