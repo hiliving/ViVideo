@@ -27,20 +27,10 @@ import com.bftv.myapplication.util.DensityUtil;
 public class WebCrossActivity extends AppCompatActivity {
 
     private WebView web;
-    private WebView tweb;
     private Intent intent;
     private Button geturl;
     private ParseWebUrlHelper parseWebUrlHelper;
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what==111){
-
-            }
-        }
-    };
     private String[] headUrl = {
       "https://beaacc.com/api.php?url=",//万能接口1
       "http://jx.598110.com/duo/index.php?url=",//万能接口2
@@ -77,7 +67,6 @@ public class WebCrossActivity extends AppCompatActivity {
         web = findViewById(R.id.web);
         listView = findViewById(R.id.psv_list);
 
-        tweb = findViewById(R.id.testweb);
         geturl = findViewById(R.id.getUrl);
         web.getSettings().setJavaScriptEnabled(true);
         web.setWebChromeClient(new WebChromeClient());
@@ -91,29 +80,9 @@ public class WebCrossActivity extends AppCompatActivity {
                 return urlName[position];
             }
         });
-       /* tweb.getSettings().setJavaScriptEnabled(true);
-        tweb.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onLoadResource(WebView view, String url) {
-                super.onLoadResource(view, url);
-
-                if (url.contains("-tt")||url.contains("videos")){
-                    Log.e("eeeeeee",url);
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           play.setText("资源准备就绪，点击播放");
-                       }
-                   });
-                    intent.putExtra("URL",url);
-                }
-            }
-        });
-        tweb.setWebChromeClient(new WebChromeClient());*/
         geturl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                tweb.loadUrl("http://api.baiyug.cn/vip/index.php?url="+web.getUrl());
 
                 int selectIndex = listView.getSelectIndex();
                 if (selectIndex == -1) {
@@ -131,7 +100,6 @@ public class WebCrossActivity extends AppCompatActivity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && web.canGoBack()) {  //表示按返回键
                         web.goBack();   //后退
-                        //webview.goForward();//前进
                         return true;    //已处理
                     }
                 }

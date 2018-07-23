@@ -1,5 +1,16 @@
 apply plugin: 'com.android.application'
 
+def gitCommitCount = Integer.parseInt('git rev-list HEAD --count'.execute([], project.rootDir).text.trim())
+
+def gitCurrentTag = 'git describe --tags --abbrev=0'.execute([], project.rootDir).text.trim()
+
+def gitCommitDate = 'git log -1 --pretty=%ci'.execute([], project.rootDir).text.trim().split()[0]
+
+printf("gitCommitCount is " + gitCommitCount + " gitCurrentTag is " + gitCurrentTag + " gitCommitDate is " + gitCommitDate)
+
+def Name = PRE_VERSION_NAME +"." + gitCommitCount
+def int extraVersionNumInt = EXTRA_VERSION_CODE as int;
+def Code = extraVersionNumInt * 100000 + gitCommitCount;
 android {
     compileSdkVersion 27
 
@@ -10,7 +21,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName Name
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -19,7 +30,19 @@ android {
         }
 
     }
-
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            def type = variant.buildType.name
+            def dateTime = new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
+            if (variant.buildType.name.equals('release')) {
+                fileName = String.format("vivideo_%s_%s_%s.apk", defaultConfig.versionName, dateTime, type)
+            } else if (variant.buildType.name.equals('debug')) {
+                fileName = "${ defaultConfig.versionName}_debug_${dateTime}.apk"
+            }
+            outputFileName = fileName;
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
