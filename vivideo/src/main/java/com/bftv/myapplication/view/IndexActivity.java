@@ -21,27 +21,16 @@ import com.bftv.myapplication.config.KeyParam;
 public class IndexActivity extends AppCompatActivity {
 
     private GridView gridView;
-    private int[] src = {
-            R.drawable.aqylogo,
-            R.drawable.youkulogo,
-            R.drawable.qqlogo,
-            R.drawable.sohulogo,
-            R.drawable.a56logo,
-            R.drawable.a163logo,
-            R.drawable.letvlogo,
-            R.drawable.tudoulogo,
-            R.drawable.hunantvlogo
-    };
     private String [] url ={
         "http://www.iqiyi.com/",
         "http://youku.com/",
         "https://v.qq.com/",
         "https://tv.sohu.com/",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "http://www.56.com/",
+        "http://v.163.com/",
+        "http://www.le.com/",
+        "http://www.tudou.com/",
+        "https://www.mgtv.com/"
     };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

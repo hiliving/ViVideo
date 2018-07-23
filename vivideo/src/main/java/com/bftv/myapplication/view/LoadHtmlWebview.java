@@ -35,9 +35,6 @@ public class LoadHtmlWebview extends AppCompatActivity {
         setContentView(R.layout.load_html);
         final  String url = getIntent().getStringExtra(KeyParam.PLAYURL);
 
-
-//        final String url = "http://jqaaa.com/jq3/?url=https://v.youku.com/v_show/id_XMzY2MDI5NDM0MA==.html?spm=a2h0j.11185381.listitem_page1.5~A&&s=dca053efbfbd36efbfbd";
-
         mWebView = findViewById(R.id.root);
 
         com.tencent.smtt.sdk.WebSettings webSetting = mWebView.getSettings();
@@ -63,22 +60,6 @@ public class LoadHtmlWebview extends AppCompatActivity {
         webSetting.setPluginState(com.tencent.smtt.sdk.WebSettings.PluginState.ON_DEMAND);
         mWebView.setInitialScale(-150);
         mWebView.loadUrl(url);
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Document document = Jsoup.connect(url).get();
-                    Element title = document.select("title").first();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }).start();
     }
 
     @Override
@@ -98,54 +79,5 @@ public class LoadHtmlWebview extends AppCompatActivity {
     }
 
 
-    public class NoAdWebViewClient extends WebViewClient {
-
-        private Context context;
-
-        public NoAdWebViewClient(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            blockAd(url);
-        }
-
-    }
-
-    private void blockAd(String url) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("javascript: ");
-        String[] alltag = url.split(",");
-        for (int i = 0; i < alltag.length; i++) {
-            String adTag = alltag[i];
-            if (adTag.trim().length() > 0) {
-                adTag = adTag.trim();
-                if (adTag.contains("#")) {
-                    adTag = adTag.substring(adTag.indexOf("#") + 1);
-                    if (Build.VERSION.SDK_INT <  Build.VERSION_CODES.KITKAT) {//19
-                        sb.append("document.getElementById(\'").append(adTag).append("\').innerHTML=\'\';");
-                    } else {
-                        sb.append("document.getElementById(\'").append(adTag).append("\').remove();");
-                    }
-
-                } else if (adTag.contains(".")) {
-                    adTag = adTag.substring(adTag.indexOf(".") + 1);
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                        sb.append("var esc=document.getElementsByClassName(\'").append(adTag).append("\');for (i in esc){esc[i].innerHTML=\'\';};");
-
-                    } else {
-                        sb.append("var esc=document.getElementsByClassName(\'").append(adTag).append("\');for (var i = esc.length - 1; i >= 0; i--){esc[i].remove();};");
-
-                    }
-                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                    sb.append("var esc=document.getElementsByTagName(\'").append(adTag).append("\');for (i in esc){esc[i].innerHTML=\'\';};");
-                } else {
-                    sb.append("var esc=document.getElementsByTagName(\'").append(adTag).append("\');for (var i = esc.length - 1; i >= 0; i--){esc[i].remove();};");
-                }
-            }
-        }
-    }
 
 }

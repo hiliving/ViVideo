@@ -32,30 +32,35 @@ public class WebCrossActivity extends AppCompatActivity {
     private ParseWebUrlHelper parseWebUrlHelper;
 
     private String[] headUrl = {
-      "https://beaacc.com/api.php?url=",//万能接口1
-      "http://jx.598110.com/duo/index.php?url=",//万能接口2
-      "http://jiexi.071811.cc/jx2.php?url=",//万能接口3
-      "http://jqaaa.com/jq3/?url=&url=",//万能接口4
-      "http://api.91exp.com/svip/?url=",//万能接口5
-      "https://jiexi.071811.cc/jx2.php?url=",//万能接口6
+      "http://jiexi.071811.cc/jx2.php?url=",//默认线路1
+      "http://api.baiyug.cn/vip/?url=",//推荐线路2
+      "https://beaacc.com/api.php?url=",//万能线路1
+      "http://jx.598110.com/duo/index.php?url=",//万能线路2
+      "http://jiexi.071811.cc/jx2.php?url=",//万能线路3
+      "http://jqaaa.com/jq3/?url=&url=",//万能线路4
+      "http://api.91exp.com/svip/?url=",//万能线路5
+      "https://jiexi.071811.cc/jx2.php?url=",//万能线路6
       "http://www.82190555.com/index/qqvod.php?url=",//腾讯视频
       "http://api.pucms.com/?url=",//爱奇艺1
       "http://api.baiyug.cn/vip/index.php?url=",//爱奇艺2
       "https://api.flvsp.com/?url=",//爱奇艺3
-      "http://api.xfsub.com/index.php?url=",//芒果TV
+      "http://api.xfsub.com/index.php?url="//芒果TV
     };
     private String[] urlName = {
-      "万能接口1",
-      "万能接口2",
-      "万能接口3",
-      "万能接口4",
-      "万能接口5",
-      "万能接口6",
+      "默认线路1",
+      "推荐线路2",
+      "万能线路1",
+      "万能线路2",
+      "万能线路3",
+      "万能线路4",
+      "万能线路5",
+      "万能线路6",
       "腾讯视频",
       "爱奇艺1",
       "爱奇艺2",
       "爱奇艺3",
       "芒果TV"
+
     };
     private PopSpinnerView listView;
 
