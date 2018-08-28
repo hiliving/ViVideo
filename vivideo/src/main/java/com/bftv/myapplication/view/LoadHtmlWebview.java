@@ -3,20 +3,28 @@ package com.bftv.myapplication.view;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.bftv.myapplication.R;
 import com.bftv.myapplication.config.KeyParam;
+import com.bftv.myapplication.webview.OnResourceReady;
 import com.bftv.myapplication.webview.X5WebView;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.MimeTypeMap;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -28,16 +36,16 @@ public class LoadHtmlWebview extends AppCompatActivity {
 
     private X5WebView mWebView;
     private WebView root;
+    private String url;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_html);
-        final  String url = getIntent().getStringExtra(KeyParam.PLAYURL);
-
+        url = getIntent().getStringExtra(KeyParam.PLAYURL);
         mWebView = findViewById(R.id.root);
 
-        com.tencent.smtt.sdk.WebSettings webSetting = mWebView.getSettings();
+        final com.tencent.smtt.sdk.WebSettings webSetting = mWebView.getSettings();
         webSetting.setAllowFileAccess(true);
         webSetting.setLayoutAlgorithm(com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
 //		webSetting.setSupportZoom(true);
@@ -48,11 +56,10 @@ public class LoadHtmlWebview extends AppCompatActivity {
         webSetting.setAppCacheEnabled(true);
         // webSetting.setDatabaseEnabled(true);
         webSetting.setDomStorageEnabled(true);
-        webSetting.setUserAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36");
+        webSetting.setUserAgent("Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Mobile Safari/537.36");
         webSetting.setJavaScriptEnabled(true);
-        webSetting.setGeolocationEnabled(true);
-        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
-        webSetting.setAppCachePath(this.getDir("appcache", 0).getPath());
+
+        webSetting.setAppCacheEnabled(false);
         webSetting.setDatabasePath(this.getDir("databases", 0).getPath());
         webSetting.setGeolocationDatabasePath(this.getDir("geolocation", 0)
                 .getPath());
@@ -60,6 +67,17 @@ public class LoadHtmlWebview extends AppCompatActivity {
         webSetting.setPluginState(com.tencent.smtt.sdk.WebSettings.PluginState.ON_DEMAND);
         mWebView.setInitialScale(-150);
         mWebView.loadUrl(url);
+//        mWebView.loadUrl("http://yun.baiyug.cn/vip/index.php?url=https://www.iqiyi.com/v_19rr2aihnc.html");
+
+        mWebView.setOnResourceReady(new OnResourceReady() {
+            @Override
+            public void ready() {
+                //mWebView.setVisibility(View.VISIBLE);
+                if (webSetting!=null){
+                    webSetting.setJavaScriptEnabled(false);
+                }
+            }
+        });
     }
 
     @Override

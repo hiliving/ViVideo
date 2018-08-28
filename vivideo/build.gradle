@@ -36,7 +36,7 @@ android {
             def type = variant.buildType.name
             def dateTime = new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
             if (variant.buildType.name.equals('release')) {
-                fileName = String.format("vivideo_%s_%s_%s.apk", defaultConfig.versionName, dateTime, type)
+                fileName = String.format("vivideo_%s.apk", defaultConfig.versionName)
             } else if (variant.buildType.name.equals('debug')) {
                 fileName = "${ defaultConfig.versionName}_debug_${dateTime}.apk"
             }
@@ -67,4 +67,9 @@ dependencies {
     compile 'com.just.agentweb:download:4.0.2'
     // (可选)
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+}
+repositories {
+    mavenCentral()
 }

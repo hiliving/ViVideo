@@ -6,12 +6,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bftv.myapplication.ParseWebUrlHelper;
@@ -19,6 +22,9 @@ import com.bftv.myapplication.PlayActivity;
 import com.bftv.myapplication.R;
 import com.bftv.myapplication.config.KeyParam;
 import com.bftv.myapplication.util.DensityUtil;
+import com.bftv.myapplication.webview.X5WebView;
+
+import org.jsoup.Jsoup;
 
 /**
  * Created by Helloworld on 2018/7/20.
@@ -26,15 +32,15 @@ import com.bftv.myapplication.util.DensityUtil;
 
 public class WebCrossActivity extends AppCompatActivity {
 
-    private WebView web;
+    private X5WebView web;
     private Intent intent;
     private Button geturl;
     private ParseWebUrlHelper parseWebUrlHelper;
 
     private String[] headUrl = {
       "http://jiexi.071811.cc/jx2.php?url=",//默认线路1
-      "http://api.baiyug.cn/vip/?url=",//推荐线路2
-      "https://beaacc.com/api.php?url=",//万能线路1
+            "http://yun.baiyug.cn/vip/index.php?url=",//推荐线路1
+            "http://api.baiyug.cn/vip/?url=",//推荐线路2
       "http://jx.598110.com/duo/index.php?url=",//万能线路2
       "http://jiexi.071811.cc/jx2.php?url=",//万能线路3
       "http://jqaaa.com/jq3/?url=&url=",//万能线路4
@@ -44,7 +50,7 @@ public class WebCrossActivity extends AppCompatActivity {
       "http://api.pucms.com/?url=",//爱奇艺1
       "http://api.baiyug.cn/vip/index.php?url=",//爱奇艺2
       "https://api.flvsp.com/?url=",//爱奇艺3
-      "http://api.xfsub.com/index.php?url="//芒果TV
+      "http://api.xfsub.com/index.php?url="//旋风TV
     };
     private String[] urlName = {
       "默认线路1",
@@ -55,14 +61,15 @@ public class WebCrossActivity extends AppCompatActivity {
       "万能线路4",
       "万能线路5",
       "万能线路6",
-      "腾讯视频",
-      "爱奇艺1",
-      "爱奇艺2",
-      "爱奇艺3",
-      "芒果TV"
+      "万能线路7",
+      "万能线路8",
+      "万能线路9",
+      "万能线路10",
+      "万能线路11"
 
     };
     private PopSpinnerView listView;
+    private TextView urltv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,11 +78,13 @@ public class WebCrossActivity extends AppCompatActivity {
 
         web = findViewById(R.id.web);
         listView = findViewById(R.id.psv_list);
-
+        urltv = findViewById(R.id.urltv);
         geturl = findViewById(R.id.getUrl);
         web.getSettings().setJavaScriptEnabled(true);
-        web.setWebChromeClient(new WebChromeClient());
-        web.setWebViewClient(new WebViewClient());
+        web.setWebChromeClient(new com.tencent.smtt.sdk.WebChromeClient());
+        web.setWebViewClient(new com.tencent.smtt.sdk.WebViewClient(){
+
+        });
         web.loadUrl(getIntent().getStringExtra(KeyParam.BASEURL));
         intent = new Intent(WebCrossActivity.this,PlayActivity.class);
 
@@ -95,8 +104,10 @@ public class WebCrossActivity extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(WebCrossActivity.this, LoadHtmlWebview.class);
-                intent.putExtra(KeyParam.PLAYURL,headUrl[listView.getSelectIndex()]+web.getUrl());
+                String url = web.getUrl();
+                intent.putExtra(KeyParam.PLAYURL,headUrl[listView.getSelectIndex()]+url.replace("m.",""));
                 startActivity(intent);
+                Log.e("获取地址2",url.replace("m.",""));
             }
         });
         web.setOnKeyListener(new View.OnKeyListener() {
@@ -111,10 +122,13 @@ public class WebCrossActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        listView.setSelectIndex(0);
+        listView.setContent("默认线路1(切换)");
     }
+
     @Override
     protected void onStop() {
         super.onStop();
     }
+
 }

@@ -24,7 +24,7 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.play_layout);
 
         exoPlayerManager = new ManualPlayer(this, R.id.exo_play_context_id);
-        exoPlayerManager.setPlayUri(Uri.parse(getIntent().getStringExtra("URL")));
+        exoPlayerManager.setPlayUri(Uri.parse("http://192.168.11.119/water.mov"));
         exoPlayerManager.startPlayer();//开始播放
     }
 
