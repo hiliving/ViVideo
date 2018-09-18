@@ -14,9 +14,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amnix.adblockwebview.ui.AdBlocksWebViewActivity;
 import com.bftv.myapplication.ParseWebUrlHelper;
 import com.bftv.myapplication.PlayActivity;
 import com.bftv.myapplication.R;
@@ -38,8 +40,8 @@ public class WebCrossActivity extends AppCompatActivity {
     private ParseWebUrlHelper parseWebUrlHelper;
 
     private String[] headUrl = {
-      "http://jiexi.071811.cc/jx2.php?url=",//默认线路1
-            "http://yun.baiyug.cn/vip/index.php?url=",//推荐线路1
+            "http://yun.baiyug.cn/vip/index.php?url=",//默认线路1
+            "http://jiexi.071811.cc/jx2.php?url=",//
             "http://api.baiyug.cn/vip/?url=",//推荐线路2
       "http://jx.598110.com/duo/index.php?url=",//万能线路2
       "http://jiexi.071811.cc/jx2.php?url=",//万能线路3
@@ -103,11 +105,13 @@ public class WebCrossActivity extends AppCompatActivity {
                     Toast.makeText(WebCrossActivity.this, "请选择线路", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(WebCrossActivity.this, LoadHtmlWebview.class);
+                /*Intent intent = new Intent(WebCrossActivity.this, LoadHtmlWebview.class);
                 String url = web.getUrl();
                 intent.putExtra(KeyParam.PLAYURL,headUrl[listView.getSelectIndex()]+url.replace("m.",""));
                 startActivity(intent);
-                Log.e("获取地址2",url.replace("m.",""));
+                Log.e("获取地址2",url.replace("m.",""));*/
+                String url = web.getUrl();
+                AdBlocksWebViewActivity.startWebView(WebCrossActivity.this,headUrl[listView.getSelectIndex()]+url.replace("m.",""),getResources().getColor(R.color.colorPrimary));
             }
         });
         web.setOnKeyListener(new View.OnKeyListener() {
@@ -131,4 +135,8 @@ public class WebCrossActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    public void onBackPressed() {
+        web.goBack();
+    }
 }
